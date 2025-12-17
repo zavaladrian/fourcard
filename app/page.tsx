@@ -1,65 +1,123 @@
+// app/page.tsx
 import Image from "next/image";
 
-export default function Home() {
+type Feature = {
+  title: string;
+  description: string;
+  accentColorClass: string;
+  iconSrc: string;
+  iconAlt: string;
+};
+
+const features: Feature[] = [
+  {
+    title: "Supervisor",
+    description: "Monitors activity to identify project roadblocks.",
+    accentColorClass: "border-cyan-400",
+    iconSrc: "/images/icon-supervisor.svg",
+    iconAlt: "Magnifying glass icon representing supervision",
+  },
+  {
+    title: "Team Builder",
+    description:
+      "Scans our talent network to create the optimal team for your project.",
+    accentColorClass: "border-red-400",
+    iconSrc: "/images/icon-team-builder.svg",
+    iconAlt: "House and people icon representing team building",
+  },
+  {
+    title: "Karma",
+    description: "Regularly evaluates our talent to ensure quality.",
+    accentColorClass: "border-amber-400",
+    iconSrc: "/images/icon-karma.svg",
+    iconAlt: "Lightbulb icon representing karma and ideas",
+  },
+  {
+    title: "Calculator",
+    description:
+      "Uses data from past projects to provide better delivery estimates.",
+    accentColorClass: "border-sky-400",
+    iconSrc: "/images/icon-calculator.svg",
+    iconAlt: "Calculator icon representing data calculation",
+  },
+];
+
+export default function HomePage() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <main className="min-h-screen bg-slate-100 text-slate-800 flex flex-col">
+      <div className="flex-1 max-w-6xl mx-auto px-6 py-16">
+        {/* Intro / heading */}
+        <header className="text-center max-w-2xl mx-auto mb-16">
+          <p className="text-sm text-slate-500">
+            Reliable, efficient delivery
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+
+          <h1 className="mt-2 text-2xl md:text-4xl font-light text-slate-800">
+            Powered by <span className="font-semibold">Technology</span>
+          </h1>
+
+          <p className="mt-4 text-sm md:text-base text-slate-500 leading-relaxed">
+            Our Artificial Intelligence powered tools use millions of project data points
+            to ensure that your project is successful.
+          </p>
+        </header>
+
+        {/* Cards grid */}
+        <section
+          className="grid gap-6 md:gap-8 md:grid-cols-3 md:grid-rows-2"
+          aria-label="Feature cards"
+        >
+          {/* Supervisor – left column, spans 2 rows */}
+          <div className="md:row-span-2 md:self-center">
+            <FeatureCard feature={features[0]} />
+          </div>
+
+          {/* Team Builder – top middle */}
+          <div>
+            <FeatureCard feature={features[1]} />
+          </div>
+
+          {/* Karma – bottom middle */}
+          <div className="md:row-start-2 md:col-start-2">
+            <FeatureCard feature={features[2]} />
+          </div>
+
+          {/* Calculator – right column, spans 2 rows */}
+          <div className="md:row-span-2 md:self-center">
+            <FeatureCard feature={features[3]} />
+          </div>
+        </section>
+      </div>
+    </main>
+  );
+}
+
+type FeatureCardProps = {
+  feature: Feature;
+};
+
+function FeatureCard({ feature }: FeatureCardProps) {
+  return (
+    <article
+      className={`bg-white rounded-xl shadow-lg p-6 md:p-8 border-t-4 ${feature.accentColorClass} flex flex-col gap-3`}
+    >
+      <h2 className="text-lg font-semibold text-slate-800">
+        {feature.title}
+      </h2>
+
+      <p className="text-sm text-slate-500 leading-relaxed">
+        {feature.description}
+      </p>
+
+      <div className="mt-4 flex justify-end">
+        <Image
+          src={feature.iconSrc}
+          alt={feature.iconAlt}
+          width={64}
+          height={64}
+          className="h-12 w-12"
+        />
+      </div>
+    </article>
   );
 }
